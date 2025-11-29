@@ -1,14 +1,14 @@
 import os
 import re
-import openai
 import praw
 from dotenv import load_dotenv
+from openai import OpenAI
 
 # Load API keys from .env file
 load_dotenv()
 
-# OpenAI API key
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Initialize OpenAI client
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # Reddit API credentials
 reddit = praw.Reddit(
@@ -82,7 +82,7 @@ Comments:
     ]
 
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=messages,
             temperature=0.7,
